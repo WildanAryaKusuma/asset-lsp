@@ -111,6 +111,8 @@ class CartController extends Controller
             'total_price' => $totalPrice,
             'payment_status' => 'paid'
         ]);
+        
+        auth()->user()->update(['is_transaction' => 1]);
 
         return redirect('/transactions')->with('success', 'Checkout berhasil!');
     }
