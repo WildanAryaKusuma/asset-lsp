@@ -45,13 +45,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard/pemasukan-day', [AdminKeuanganController::class, 'dayPemasukan'])->name('pemasukan.day');
     Route::get('dashboard/pemasukan-month', [AdminKeuanganController::class, 'monthPemasukan'])->name('pemasukan.month');
     Route::get('dashboard/pemasukan-all', [AdminKeuanganController::class, 'allPemasukan'])->name('pemasukan.all');
-
     Route::get('dashboard/pengeluaran-month', [AdminKeuanganController::class, 'monthPengeluaran'])->name('pengeluaran.month');
     Route::get('dashboard/pengeluaran-all', [AdminKeuanganController::class, 'allPengeluaran'])->name('pengeluaran.all');
-
-    Route::get('operator/pemasukan-day', [OperatorKeuanganController::class, 'dayPemasukan'])->name('pemasukan.operator.day');
-    Route::get('operator/pemasukan-month', [OperatorKeuanganController::class, 'monthPemasukan'])->name('pemasukan.operator.month');
-    Route::get('operator/pemasukan-all', [OperatorKeuanganController::class, 'allPemasukan'])->name('pemasukan.operator.all');
 
     Route::resource('carts', CartController::class);
     Route::post('carts/buy/{id}', [CartController::class, 'create'])->name('cartbuy.create');

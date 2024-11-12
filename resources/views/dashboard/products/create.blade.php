@@ -3,7 +3,7 @@
 @section('container')
     <h3 class="mb-5">Halaman Produk</h3>
 
-    <form action="{{ route('admin.products.store') }}" method="post">
+    <form action="{{ route('dashboard.products.store') }}" method="post">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Nama Produk</label>

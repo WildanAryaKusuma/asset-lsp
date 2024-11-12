@@ -3,7 +3,7 @@
 @section('container')
     <h3 class="mb-5">Halaman Edit Produk</h3>
 
-    <form action="{{ route('admin.products.update', $product->id) }}" method="post">
+    <form action="{{ route('dashboard.products.update', $product->id) }}" method="post">
         @csrf
         @method('PUT')
         <div class="mb-3">

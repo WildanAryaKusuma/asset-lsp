@@ -28,7 +28,7 @@
                     <td scope="row">{{ $loop->iteration }}</td>
                     <td>{{ $report->product->name  }}</td>
                     <td>Rp. {{ number_format($report->product->price, 0, ',' , '.') }}</td>
-                    <td>{{ $report->product->stock  }}</td>
+                    <td>{{ $report->quantity  }}</td>
                     <td>Rp. {{ number_format($report->subtotal, 0, ',' , '.') }}</td>
                     <td>{{ $report->created_at->format('d-m-Y') }}</td>
                 </tr>

@@ -35,14 +35,26 @@ class AdminProductController extends Controller
         $validateData = $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
         ]);
 
-        Product::create($validateData);
+        $product = Product::create($validateData);
 
-        return redirect()->route('dashboard.products.index');
+        // Tambahkan report saat produk baru dibuat
+        $stockDifference = $validateData['stock']; // Jumlah stok awal
+
+        Report::create([
+            'product_id' => $product->id,
+            'type' => 'masuk',
+            'quantity' => $stockDifference,
+            'description' => 'Penambahan stok product baru',
+            'subtotal' => $product->price * $stockDifference
+        ]);
+
+        return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
+
 
     /**
      * Show the form for editing the specified resource.
