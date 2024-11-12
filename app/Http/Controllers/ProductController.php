@@ -11,8 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('status', 'masuk')
-        ->where('stock', '>', 0) 
+        $products = Product::where('stock', '>', 0) 
         ->latest()
         ->paginate(6);
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Report;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -65,7 +66,7 @@ class CartController extends Controller
         return redirect('/carts')->with('success', 'Produk berhasil ditambahkan ke keranjang');
     }
 
-    public function checkout() 
+    public function checkout()
     {
         $transaction = Transaction::where('user_id', auth()->user()->id)
             ->where('payment_status', 'unpaid')
@@ -81,16 +82,29 @@ class CartController extends Controller
         foreach ($cartItems as $item) {
             $product = $item->product;
 
+            // Cek stok produk sebelum checkout
             if ($product->stock < $item->quantity) {
                 return redirect('/carts')->with('error', "Stok untuk produk {$product->name} tidak mencukupi.");
             }
 
+            // Kurangi stok produk
             $product->stock -= $item->quantity;
             $product->save();
 
+            // Log perubahan stok
+            Report::create([
+                'product_id' => $product->id,
+                'type' => 'keluar',  // Pengurangan stok
+                'quantity' => $item->quantity,
+                'description' => 'Pengurangan stok akibat checkout',
+                'subtotal' => $product->price * $item->quantity
+            ]);
+
+            // Tambah total harga transaksi
             $totalPrice += $item->subtotal;
         }
 
+        // Update transaksi menjadi 'paid'
         $transaction->update([
             'total_price' => $totalPrice,
             'payment_status' => 'paid'

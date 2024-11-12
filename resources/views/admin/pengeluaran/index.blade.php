@@ -23,20 +23,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($products as $product)
+            @foreach ($reports as $report)
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{ $product->name  }}</td>
-                    <td>Rp. {{ number_format($product->price, 0, ',' , '.') }}</td>
-                    <td>{{ $product->stock  }}</td>
-                    <td>Rp. {{ number_format($product->price * $product->stock, 0, ',' , '.') }}</td>
-                    <td>{{ $product->created_at->format('d-m-Y') }}</td>
+                    <td>{{ $report->product->name  }}</td>
+                    <td>Rp. {{ number_format($report->product->price, 0, ',' , '.') }}</td>
+                    <td>{{ $report->product->stock  }}</td>
+                    <td>Rp. {{ number_format($report->subtotal, 0, ',' , '.') }}</td>
+                    <td>{{ $report->created_at->format('d-m-Y') }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
     <div class="my-5">
-        {{ $products->links() }}
+        {{ $reports->links() }}
     </div>
 @endsection

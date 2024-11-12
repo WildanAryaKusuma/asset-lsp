@@ -21,19 +21,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($reports as $report)
+            @foreach ($transactions as $transaction)
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{ $report->user->name }}</td>
+                    <td>{{ $transaction->user->name }}</td>
                     <td>
                         <ul class="list-unstyled">
-                            @foreach ($report->carts as $item)
+                            @foreach ($transaction->carts as $item)
                                 <li>{{ $item->product->name }}</li>
                             @endforeach
                         </ul>
                     </td>
-                    <td>Rp. {{ number_format($report->total_price, 0, ',', '.') }}</td>
-                    <td>{{ $report->created_at->format('d-m-Y') }}</td>
+                    <td>Rp. {{ number_format($transaction->total_price, 0, ',', '.') }}</td>
+                    <td>{{ $transaction->created_at->format('d-m-Y') }}</td>
                 </tr>
             @endforeach
         </tbody>
