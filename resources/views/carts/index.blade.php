@@ -3,6 +3,17 @@
 @section('container')
     <h3 class="mb-4">Halaman Data Keranjang</h3>
 
+    @if(session('error'))
+        <div id="error-alert" class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if(session('success'))
+        <div id="success-alert" class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -42,7 +53,7 @@
             <form action="{{ route('cart.transaksi') }}" method="post">
                 @csrf
                 @method('POST')
-                <button type="submit" class="btn btn-dark my-3" onclick="window.alert('Apakah kamu ingin checkout?')">Checkout</button>
+                <button type="submit" class="btn btn-dark my-3" onclick="window.confirm('Apakah kamu ingin checkout?')">Checkout</button>
             </form>
         </div>
     @endif

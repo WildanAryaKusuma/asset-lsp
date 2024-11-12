@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use Illuminate\Http\Request;
+use App\Models\Product;
 use App\Models\Transaction;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -17,7 +18,7 @@ class CartController extends Controller
             $query->where('payment_status', 'unpaid');
         })->latest()->get();
 
-        return view('pembelian.index', [
+        return view('carts.index', [
             'carts' => $carts
         ]);
     }
@@ -26,9 +27,12 @@ class CartController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id) // nangkep parameter id
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('carts.buy', [
+            'product' => $product
+        ]);
     }
 
     /**
@@ -36,15 +40,63 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $subtotal = $request->price * $request->quantity;
+
+        $transaction = Transaction::firstOrCreate(
+            [
+                'user_id' => auth()->user()->id,
+                'payment_status' => 'unpaid'
+            ],
+            [
+                'total_price' => 0, 
+                'payment_status' => 'unpaid',
+            ]
+        );
+
+        $cartData = [
+            'transaction_id' => $transaction->id,
+            'product_id' => intval($request->product_id),
+            'quantity' => $request->quantity,
+            'subtotal' => $subtotal,
+        ];
+
+        Cart::create($cartData);
+
+        return redirect('/carts')->with('success', 'Produk berhasil ditambahkan ke keranjang');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function checkout() 
     {
-        //
+        $transaction = Transaction::where('user_id', auth()->user()->id)
+            ->where('payment_status', 'unpaid')
+            ->first();
+
+        if (!$transaction) {
+            return redirect('/carts')->with('error', 'Tidak ada item dalam keranjang untuk di-checkout.');
+        }
+
+        $cartItems = Cart::where('transaction_id', $transaction->id)->get();
+        $totalPrice = 0;
+
+        foreach ($cartItems as $item) {
+            $product = $item->product;
+
+            if ($product->stock < $item->quantity) {
+                return redirect('/carts')->with('error', "Stok untuk produk {$product->name} tidak mencukupi.");
+            }
+
+            $product->stock -= $item->quantity;
+            $product->save();
+
+            $totalPrice += $item->subtotal;
+        }
+
+        $transaction->update([
+            'total_price' => $totalPrice,
+            'payment_status' => 'paid'
+        ]);
+
+        return redirect('/transactions')->with('success', 'Checkout berhasil!');
     }
 
     /**
@@ -53,7 +105,7 @@ class CartController extends Controller
     public function edit(string $id)
     {
         $cart = Cart::findOrFail($id);
-        return view('pembelian.edit', [
+        return view('carts.edit', [
             'transaction' => $cart
         ]);
     }
@@ -85,4 +137,6 @@ class CartController extends Controller
         Cart::destroy($id);
         return back();
     }
+
+
 }

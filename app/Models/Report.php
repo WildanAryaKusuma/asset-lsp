@@ -7,6 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
-    /** @use HasFactory<\Database\Factories\ReportFactory> */
     use HasFactory;
 }

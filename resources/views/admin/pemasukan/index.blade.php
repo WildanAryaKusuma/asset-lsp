@@ -6,10 +6,9 @@
     <div class="card text-start bg-dark text-white" style="width: 320px">
         <div class="card-body">
             <h5 class="card-title">Total {{ $title }}</h5>
-            <p class="card-text">Rp. {{ number_format($total, 0, ',' , '.') }}</p>
+            <p class="card-text">Rp. {{ number_format($total, 0, ',', '.') }}</p>
         </div>
     </div>
-    
 
     <table class="table table-responsive mt-4">
         <thead>
@@ -17,20 +16,24 @@
                 <th>#</th>
                 <th>Nama Pembeli</th>
                 <th>Produk</th>
-                <th>Kuantitas</th>
                 <th>Pemasukan</th>
                 <th>Tanggal Transaksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($transactions as $transaction)
+            @foreach ($reports as $report)
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{ $transaction->user->name }}</td>
-                    <td>{{ $transaction->product->name }}</td>
-                    <td>{{ $transaction->quantity }}</td>
-                    <td>Rp. {{ number_format($transaction->total_price, 0, ',' , '.') }}</td>
-                    <td>{{ $transaction->created_at->format('d-m-Y') }}</td>
+                    <td>{{ $report->user->name }}</td>
+                    <td>
+                        <ul class="list-unstyled">
+                            @foreach ($report->carts as $item)
+                                <li>{{ $item->product->name }}</li>
+                            @endforeach
+                        </ul>
+                    </td>
+                    <td>Rp. {{ number_format($report->total_price, 0, ',', '.') }}</td>
+                    <td>{{ $report->created_at->format('d-m-Y') }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -4,7 +4,7 @@
     <h3 class="mb-5">Halaman Pembelian Produk</h3>
 
     <div class="container mb-5">
-        <form action="{{ route('buy.store') }}" method="post">
+        <form action="{{ route('carts.store') }}" method="post">
             @csrf
             @method('POST')
             <div class="my-3">

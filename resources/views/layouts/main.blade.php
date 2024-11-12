@@ -16,6 +16,25 @@
         @yield('container')
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorAlert = document.getElementById("error-alert");
+            var successAlert = document.getElementById("success-alert");
+
+            if (errorAlert) {
+                setTimeout(function() {
+                    errorAlert.style.display = "none";
+                }, 2700);
+            }
+
+            if (successAlert) {
+                setTimeout(function() {
+                    successAlert.style.display = "none";
+                }, 2700);
+            }
+        });
+    </script>
+
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 
