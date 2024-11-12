@@ -28,28 +28,35 @@ Route::get('products', [ProductController::class, 'index'])->name('products');
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard.home');
+    // Rute untuk admin dan operator
+    Route::middleware('role:admin,operator')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard.home');
+        });
+
+        Route::resource('dashboard/user', AdminUserController::class);
+        Route::resource('dashboard/operator', AdminOperatorController::class);
+
+        Route::name('dashboard.')->group(function () {
+            Route::resource('dashboard/products', AdminProductController::class);
+        });
+
+        Route::get('/dashboard/products-in', [ReportController::class, 'showIncomingProducts'])->name('admin.produkmasuk.index');
+        Route::get('/dashboard/products-out', [ReportController::class, 'showOutgoingProducts'])->name('admin.produkkeluar.index');
+        Route::get('dashboard/pembeli', [AdminUserController::class, 'pembeli'])->name('admin.pembeli');
+        Route::get('dashboard/pemasukan-day', [AdminKeuanganController::class, 'dayPemasukan'])->name('pemasukan.day');
+        Route::get('dashboard/pemasukan-month', [AdminKeuanganController::class, 'monthPemasukan'])->name('pemasukan.month');
+        Route::get('dashboard/pemasukan-all', [AdminKeuanganController::class, 'allPemasukan'])->name('pemasukan.all');
+        Route::get('dashboard/pengeluaran-month', [AdminKeuanganController::class, 'monthPengeluaran'])->name('pengeluaran.month');
+        Route::get('dashboard/pengeluaran-all', [AdminKeuanganController::class, 'allPengeluaran'])->name('pengeluaran.all');
     });
 
-    Route::resource('dashboard/user', AdminUserController::class);
-    Route::resource('dashboard/operator', AdminOperatorController::class);
-
-    Route::name('dashboard.')->group(function () {
-        Route::resource('dashboard/products', AdminProductController::class);
+    // Rute khusus untuk user
+    Route::middleware('role:user')->group(function () {
+        Route::resource('carts', CartController::class);
+        Route::post('carts/buy/{id}', [CartController::class, 'create'])->name('cartbuy.create');
+        Route::post('carts/transaction', [CartController::class, 'checkout'])->name('cart.transaksi');
+        Route::resource('transactions', TransactionController::class);
     });
-
-    Route::get('/dashboard/products-in', [ReportController::class, 'showIncomingProducts'])->name('admin.produkmasuk.index');
-    Route::get('/dashboard/products-out', [ReportController::class, 'showOutgoingProducts'])->name('admin.produkkeluar.index');
-    Route::get('dashboard/pembeli', [AdminUserController::class, 'pembeli'])->name('admin.pembeli');
-    Route::get('dashboard/pemasukan-day', [AdminKeuanganController::class, 'dayPemasukan'])->name('pemasukan.day');
-    Route::get('dashboard/pemasukan-month', [AdminKeuanganController::class, 'monthPemasukan'])->name('pemasukan.month');
-    Route::get('dashboard/pemasukan-all', [AdminKeuanganController::class, 'allPemasukan'])->name('pemasukan.all');
-    Route::get('dashboard/pengeluaran-month', [AdminKeuanganController::class, 'monthPengeluaran'])->name('pengeluaran.month');
-    Route::get('dashboard/pengeluaran-all', [AdminKeuanganController::class, 'allPengeluaran'])->name('pengeluaran.all');
-
-    Route::resource('carts', CartController::class);
-    Route::post('carts/buy/{id}', [CartController::class, 'create'])->name('cartbuy.create');
-    Route::post('carts/transaction', [CartController::class, 'checkout'])->name('cart.transaksi');
-    Route::resource('transactions', TransactionController::class);
 });
+
