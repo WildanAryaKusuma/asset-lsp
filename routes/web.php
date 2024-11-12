@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminUserController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\OperatorUserController;
 use App\Http\Controllers\AdminKeuanganController;
 use App\Http\Controllers\AdminOperatorController;
@@ -35,17 +37,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.home');
     });
+
     Route::resource('admin/user', AdminUserController::class);
     Route::resource('admin/operator', AdminOperatorController::class);
-    Route::resource('admin/product-in', AdminProductInController::class);
-    Route::resource('admin/product-out', AdminProductOutController::class);
-    Route::resource('admin/product-all', AdminProductAllController::class);
-    Route::get('admin/pembeli', [AdminUserController::class, 'pembeli'])->name('admin.pembeli');
 
+    Route::name('admin.')->group(function () {
+        Route::resource('admin/products', AdminProductController::class);
+    });
+
+    Route::get('/admin/products-in', [ReportController::class, 'showIncomingProducts'])->name('admin.produkmasuk.index');
+    Route::get('/admin/products-out', [ReportController::class, 'showOutgoingProducts'])->name('admin.produkkeluar.index');
+    Route::get('admin/pembeli', [AdminUserController::class, 'pembeli'])->name('admin.pembeli');
     Route::get('admin/pemasukan-day', [AdminKeuanganController::class, 'dayPemasukan'])->name('pemasukan.day');
     Route::get('admin/pemasukan-month', [AdminKeuanganController::class, 'monthPemasukan'])->name('pemasukan.month');
     Route::get('admin/pemasukan-all', [AdminKeuanganController::class, 'allPemasukan'])->name('pemasukan.all');
-
 
     Route::get('admin/pengeluaran-month', [AdminKeuanganController::class, 'monthPengeluaran'])->name('pengeluaran.month');
     Route::get('admin/pengeluaran-all', [AdminKeuanganController::class, 'allPengeluaran'])->name('pengeluaran.all');

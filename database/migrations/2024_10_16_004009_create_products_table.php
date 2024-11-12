@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('description');
             $table->float('stock');
             $table->float('price');
-            $table->string('status')->default('masuk');
             $table->timestamps();
         });
     }

@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class AdminKeuanganController extends Controller
 {
-    public function dayPemasukan() 
+    public function dayPemasukan()
     {
-        $transactions = Transaction::where('is_transaction', 1)
+        $transactions = Transaction::where('payment_status', 'paid')
         ->whereDate('created_at', now()->toDateString())
         ->latest()
         ->get();
         
-        $total = Transaction::where('is_transaction', 1)
+        $total = Transaction::where('payment_status', 'paid')
         ->whereDate('created_at', now()->toDateString())
         ->sum('total_price');;
 
@@ -27,12 +27,12 @@ class AdminKeuanganController extends Controller
     }
     public function monthPemasukan() 
     {
-        $transactions = Transaction::where('is_transaction', 1)
+        $transactions = Transaction::where('payment_status', 'paid')
         ->whereYear('created_at', date('Y'))
         ->whereMonth('created_at', date('m'))
         ->latest()->get();
         
-        $total = Transaction::where('is_transaction', 1)
+        $total = Transaction::where('payment_status', 'paid')
         ->whereYear('created_at', date('Y'))
         ->whereMonth('created_at', date('m'))
         ->sum('total_price');;
@@ -45,9 +45,9 @@ class AdminKeuanganController extends Controller
     }
     public function allPemasukan() 
     {
-        $transactions = Transaction::where('is_transaction', 1)->latest()->get();
+        $transactions = Transaction::where('payment_status', 'paid')->latest()->get();
         
-        $total = Transaction::where('is_transaction', 1)
+        $total = Transaction::where('payment_status', 'paid')
         ->sum('total_price');;
 
         return view('admin.pemasukan.index', [
@@ -70,8 +70,8 @@ class AdminKeuanganController extends Controller
         ->value('total_value');
 
         return view('admin.pengeluaran.index', [
-            'products' => $products, 
             'title' => 'Pengeluaran Bulan Ini', 
+            'products' => $products, 
             'total' => $totalValue
         ]);
     }

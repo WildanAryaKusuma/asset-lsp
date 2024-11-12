@@ -15,9 +15,9 @@
                 <li class="nav-item me-3 dropdown">
                     <a href="#" class="nav-link dropdown-toggle {{ request()->is('admin/product-all', 'admin/product-in', 'admin/product-out') ? 'active' : '' }}" data-bs-toggle="dropdown">Product</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/admin/product-all" class="dropdown-item {{ request()->is('admin/product-all') ? 'active' : '' }}">Semua Produk</a></li>
-                        <li><a href="/admin/product-in" class="dropdown-item {{ request()->is('admin/product-in') ? 'active' : '' }}">Produk Masuk</a></li>
-                        <li><a href="/admin/product-out" class="dropdown-item {{ request()->is('admin/product-out') ? 'active' : '' }}">Produk Keluar</a></li>
+                        <li><a href="/admin/products" class="dropdown-item {{ request()->is('admin/product-all') ? 'active' : '' }}">Semua Produk</a></li>
+                        <li><a href="/admin/products-in" class="dropdown-item {{ request()->is('admin/product-in') ? 'active' : '' }}">Produk Masuk</a></li>
+                        <li><a href="/admin/products-out" class="dropdown-item {{ request()->is('admin/product-out') ? 'active' : '' }}">Produk Keluar</a></li>
                     </ul>
                 </li>
                 <li class="nav-item me-3 dropdown">
