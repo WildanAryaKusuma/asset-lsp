@@ -14,10 +14,15 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::latest()->get();
+        $transactions = Transaction::where('payment_status', 'paid')
+        ->where('user_id', auth()->user()->id)
+        ->latest()
+        ->get();
+
         return view('transactions.index', [
             'transactions' => $transactions
         ]);
+
     }
 
     /**

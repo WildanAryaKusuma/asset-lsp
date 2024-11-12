@@ -26,7 +26,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function storePembelian(Request $request)
+    public function storeCart(Request $request)
     {
         $subtotal = $request->price * $request->quantity;
 
@@ -53,7 +53,7 @@ class ProductController extends Controller
         // Simpan ke tabel carts
         Cart::create($cartData);
 
-        return redirect('/pembelian')->with('success', 'Produk berhasil ditambahkan ke keranjang');
+        return redirect('/carts')->with('success', 'Produk berhasil ditambahkan ke keranjang');
     }
 
     
@@ -70,19 +70,30 @@ class ProductController extends Controller
 
     public function checkout()
     {
-        // Ambil transaksi unpaid untuk user yang sedang login
         $transaction = Transaction::where('user_id', auth()->user()->id)
             ->where('payment_status', 'unpaid')
             ->first();
 
         if (!$transaction) {
-            return redirect('/pembelian')->with('error', 'Tidak ada item dalam keranjang untuk di-checkout.');
+            return redirect('/carts')->with('error', 'Tidak ada item dalam keranjang untuk di-checkout.');
         }
 
-        // Hitung total harga dari semua item di cart
-        $totalPrice = Cart::where('transaction_id', $transaction->id)->sum('subtotal');
+        $cartItems = Cart::where('transaction_id', $transaction->id)->get();
+        $totalPrice = 0;
 
-        // Update transaksi menjadi paid dan set total_price
+        foreach ($cartItems as $item) {
+            $product = $item->product;
+
+            if ($product->stock < $item->quantity) {
+                return redirect('/carts')->with('error', "Stok untuk produk {$product->name} tidak mencukupi.");
+            }
+
+            $product->stock -= $item->quantity;
+            $product->save();
+
+            $totalPrice += $item->subtotal;
+        }
+
         $transaction->update([
             'total_price' => $totalPrice,
             'payment_status' => 'paid'
@@ -90,6 +101,7 @@ class ProductController extends Controller
 
         return redirect('/transactions')->with('success', 'Checkout berhasil!');
     }
+
 
 
     

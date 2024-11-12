@@ -4,7 +4,7 @@
     <h3 class="mb-5">Halaman Edit Pembelian Produk</h3>
 
     <div class="container mb-5">
-        <form action="{{ route('pembelian.update', $transaction->id) }}" method="post">
+        <form action="{{ route('carts.update', $transaction->id) }}" method="post">
             @csrf
             @method('PUT')
             <div class="my-3">

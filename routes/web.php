@@ -1,20 +1,20 @@
 <?php
 
-use App\Http\Controllers\AdminKeuanganController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\OperatorUserController;
+use App\Http\Controllers\AdminKeuanganController;
 use App\Http\Controllers\AdminOperatorController;
 use App\Http\Controllers\AdminProductInController;
 use App\Http\Controllers\OperatorManageController;
 use App\Http\Controllers\AdminProductAllController;
 use App\Http\Controllers\AdminProductOutController;
-use App\Http\Controllers\OperatorKeuanganController;
 use App\Http\Controllers\OperatorProductController;
-use App\Http\Controllers\PembelianController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\OperatorKeuanganController;
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
@@ -69,9 +69,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('operator/product-out', [OperatorProductController::class, 'out'])->name('operator.product-out');
 
         Route::post('products/buy/{buy}', [ProductController::class, 'create'])->name('buy.create');
-        Route::post('products/store', [ProductController::class, 'storePembelian'])->name('buy.store');
+        Route::post('products/store', [ProductController::class, 'storeCart'])->name('buy.store');
 
-        Route::resource('pembelian', PembelianController::class);
+        // Route::resource('pembelian', PembelianController::class);
+        Route::resource('carts', CartController::class);
         Route::resource('transactions', TransactionController::class);
         Route::post('cart/transaction', [ProductController::class, 'checkout'])->name('cart.transaksi');
 

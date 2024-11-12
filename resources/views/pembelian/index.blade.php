@@ -24,8 +24,8 @@
                     <td>Rp. {{ number_format($cart->subtotal, 0, ',' , '.') }}</td>
                     <td>
                         <div class="d-flex justify-content-center text-center">
-                            <a href="{{ route('pembelian.edit', $cart->id) }}" class="btn btn-link text-decoration-none">Edit</a>
-                            <form action="{{ route('pembelian.destroy', $cart->id) }}" method="post">
+                            <a href="{{ route('carts.edit', $cart->id) }}" class="btn btn-link text-decoration-none">Edit</a>
+                            <form action="{{ route('carts.destroy', $cart->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-link text-decoration-none text-danger" onclick="return window.confirm('Apakah kamu yakin hapus?')">Delete</button>
