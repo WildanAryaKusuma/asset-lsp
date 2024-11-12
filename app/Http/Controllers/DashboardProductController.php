@@ -6,7 +6,7 @@ use App\Models\Report;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class AdminProductController extends Controller
+class DashboardProductController extends Controller
 {
     /**
      * Display a listing of the resource.

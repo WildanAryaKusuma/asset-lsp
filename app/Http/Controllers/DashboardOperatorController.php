@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class OperatorManageController extends Controller
+class DashboardOperatorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+     
     public function index()
     {
         $users = User::where('role', 'operator')->latest()->get();
-        return view('operator.manage.index', compact('users'));
+        return view('dashboard.operator.index', compact('users'));
     }
 
     /**
@@ -21,7 +22,7 @@ class OperatorManageController extends Controller
      */
     public function create()
     {
-        return view('operator.manage.create');
+        return view('dashboard.operator.create');
     }
 
     /**
@@ -36,12 +37,11 @@ class OperatorManageController extends Controller
             'role' => 'required',
         ]);
         
+        // dd($validateData);
         
         User::create($validateData);
-        
-        // dd($validateData);
 
-        return redirect()->route('list.index');
+        return redirect()->route('operator.index');
     }
 
     /**
@@ -56,8 +56,11 @@ class OperatorManageController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        //
+    {   
+        $user = User::findOrFail($id);
+        return view('dashboard.operator.edit', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -65,14 +68,31 @@ class OperatorManageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'role' => 'required',
+        ]);
+        
+        // dd($validateData);
+        
+        User::whereId($id)->update($validateData);
+
+        return redirect()->route('operator.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        if (auth()->user()->role == 'operator') {
+            return redirect()->route('operator.index')->with('error', 'Operator tidak memiliki izin untuk menghapus data.');
+        }
+
+        User::destroy($id);
+        return redirect()->route('operator.index')->with('success', 'Data berhasil dihapus.');
     }
+
 }

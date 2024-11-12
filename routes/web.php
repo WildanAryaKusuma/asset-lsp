@@ -10,7 +10,11 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminKeuanganController;
 use App\Http\Controllers\AdminOperatorController;
+use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\OperatorKeuanganController;
+use App\Http\Controllers\DashboardKeuanganController;
+use App\Http\Controllers\DashboardOperatorController;
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
@@ -28,28 +32,31 @@ Route::get('products', [ProductController::class, 'index'])->name('products');
 
 Route::middleware(['auth'])->group(function () {
 
-    // Rute untuk admin dan operator
     Route::middleware('role:admin,operator')->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard.home');
         });
 
-        Route::resource('dashboard/user', AdminUserController::class);
-        Route::resource('dashboard/operator', AdminOperatorController::class);
+        Route::resource('dashboard/user', DashboardUserController::class);
+        Route::resource('dashboard/operator', DashboardOperatorController::class);
 
         Route::name('dashboard.')->group(function () {
-            Route::resource('dashboard/products', AdminProductController::class);
+            Route::resource('dashboard/products', DashboardProductController::class);
         });
 
-        Route::get('/dashboard/products-in', [ReportController::class, 'showIncomingProducts'])->name('admin.produkmasuk.index');
-        Route::get('/dashboard/products-out', [ReportController::class, 'showOutgoingProducts'])->name('admin.produkkeluar.index');
-        Route::get('dashboard/pembeli', [AdminUserController::class, 'pembeli'])->name('admin.pembeli');
-        Route::get('dashboard/pemasukan-day', [AdminKeuanganController::class, 'dayPemasukan'])->name('pemasukan.day');
-        Route::get('dashboard/pemasukan-month', [AdminKeuanganController::class, 'monthPemasukan'])->name('pemasukan.month');
-        Route::get('dashboard/pemasukan-all', [AdminKeuanganController::class, 'allPemasukan'])->name('pemasukan.all');
-        Route::get('dashboard/pengeluaran-month', [AdminKeuanganController::class, 'monthPengeluaran'])->name('pengeluaran.month');
-        Route::get('dashboard/pengeluaran-all', [AdminKeuanganController::class, 'allPengeluaran'])->name('pengeluaran.all');
+        Route::get('/dashboard/products-in', [ReportController::class, 'showIncomingProducts'])->name('dashboard.produkmasuk.index');
+        Route::get('/dashboard/products-out', [ReportController::class, 'showOutgoingProducts'])->name('dashboard.produkkeluar.index');
+        Route::get('dashboard/pembeli', [DashboardUserController::class, 'pembeli'])->name('dashboard.pembeli');
+        Route::get('dashboard/pemasukan-day', [DashboardKeuanganController::class, 'dayPemasukan'])->name('pemasukan.day');
+        Route::get('dashboard/pemasukan-month', [DashboardKeuanganController::class, 'monthPemasukan'])->name('pemasukan.month');
+        Route::get('dashboard/pemasukan-all', [DashboardKeuanganController::class, 'allPemasukan'])->name('pemasukan.all');
     });
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('dashboard/pengeluaran-month', [DashboardKeuanganController::class, 'monthPengeluaran'])->name('pengeluaran.month');
+        Route::get('dashboard/pengeluaran-all', [DashboardKeuanganController::class, 'allPengeluaran'])->name('pengeluaran.all');
+    });
+
 
     // Rute khusus untuk user
     Route::middleware('role:user')->group(function () {

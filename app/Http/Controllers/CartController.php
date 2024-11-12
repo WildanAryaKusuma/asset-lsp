@@ -16,8 +16,10 @@ class CartController extends Controller
     public function index()
     {
         $carts = Cart::whereHas('transaction', function ($query) {
-            $query->where('payment_status', 'unpaid');
-        })->latest()->get();
+            $query->where('payment_status', 'unpaid')
+                ->where('user_id', auth()->id());
+        })->latest()
+            ->get();
 
         return view('carts.index', [
             'carts' => $carts
@@ -49,7 +51,7 @@ class CartController extends Controller
                 'payment_status' => 'unpaid'
             ],
             [
-                'total_price' => 0, 
+                'total_price' => 0,
                 'payment_status' => 'unpaid',
             ]
         );
@@ -94,7 +96,7 @@ class CartController extends Controller
             // Log perubahan stok
             Report::create([
                 'product_id' => $product->id,
-                'type' => 'keluar',  
+                'type' => 'keluar',
                 'quantity' => $item->quantity,
                 'description' => 'Pengurangan stok akibat checkout',
                 'subtotal' => $product->price * $item->quantity
@@ -151,6 +153,4 @@ class CartController extends Controller
         Cart::destroy($id);
         return back();
     }
-
-
 }

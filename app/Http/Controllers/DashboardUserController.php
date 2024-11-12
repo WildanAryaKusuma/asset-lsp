@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AdminOperatorController extends Controller
+class DashboardUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,14 @@ class AdminOperatorController extends Controller
      
     public function index()
     {
-        $users = User::where('role', 'operator')->latest()->get();
-        return view('dashboard.operator.index', compact('users'));
+        $users = User::where('role', 'user')->latest()->get();
+        return view('dashboard.user.index', compact('users'));
+    }
+    
+    public function pembeli()
+    {
+        $users = User::where('role', 'user')->where('is_transaction', 1)->latest()->get();
+        return view('dashboard.pembeli', compact('users'));
     }
 
     /**
@@ -22,7 +28,7 @@ class AdminOperatorController extends Controller
      */
     public function create()
     {
-        return view('dashboard.operator.create');
+        return view('dashboard.user.create');
     }
 
     /**
@@ -41,7 +47,7 @@ class AdminOperatorController extends Controller
         
         User::create($validateData);
 
-        return redirect()->route('operator.index');
+        return redirect()->route('user.index');
     }
 
     /**
@@ -58,7 +64,7 @@ class AdminOperatorController extends Controller
     public function edit(string $id)
     {   
         $user = User::findOrFail($id);
-        return view('dashboard.operator.edit', [
+        return view('dashboard.user.edit', [
             'user' => $user
         ]);
     }
@@ -79,20 +85,15 @@ class AdminOperatorController extends Controller
         
         User::whereId($id)->update($validateData);
 
-        return redirect()->route('operator.index');
+        return redirect()->route('user.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        if (auth()->user()->role == 'operator') {
-            return redirect()->route('operator.index')->with('error', 'Operator tidak memiliki izin untuk menghapus data.');
-        }
-
         User::destroy($id);
-        return redirect()->route('operator.index')->with('success', 'Data berhasil dihapus.');
+        return back();
     }
-
 }

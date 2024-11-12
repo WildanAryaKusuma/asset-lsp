@@ -7,7 +7,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AdminKeuanganController extends Controller
+class DashboardKeuanganController extends Controller
 {
     /**
      * Pemasukan hari ini
