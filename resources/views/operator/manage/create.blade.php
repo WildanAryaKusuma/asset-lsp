@@ -31,6 +31,6 @@
             </div>
         </div>
 
-        <button class="btn btn-primary mt-4" type="submit">Submit</button>
+        <button class="btn btn-dark mt-4" type="submit">Submit</button>
     </form>
 @endsection

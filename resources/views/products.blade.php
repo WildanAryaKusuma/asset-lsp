@@ -19,7 +19,7 @@
                     <form action="{{ route('buy.create', $product->id) }}" method="post">
                         @csrf
                         @method('POST')
-                        <button type="submit" class="btn btn-primary" onclick="return confirm('Mau membeli product ini?')">Masukkan Keranjang</button>
+                        <button type="submit" class="btn btn-dark" onclick="return confirm('Mau membeli product ini?')">Masukkan Keranjang</button>
                     </form>
 
                 </div>

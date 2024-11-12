@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
     <div class="container">
         <a href="#" class="navbar-brand">DanMarketPlace</a>
         <div class="collapse navbar-collapse">

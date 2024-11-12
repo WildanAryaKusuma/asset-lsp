@@ -27,7 +27,7 @@
                 <td>Rp. {{ number_format($transaction->total_price, 0, ',', '.') }}</td>
                 <td>{{ $transaction->updated_at }}</td>
                 <td>
-                    <a href="{{ route('transactions.show', $transaction->id) }}" class="btn btn-primary">Show</a>
+                    <a href="{{ route('transactions.show', $transaction->id) }}" class="btn btn-dark">Show</a>
                 </td>
             </tr>
         @endforeach

@@ -16,7 +16,7 @@
                     @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     <input type="hidden" name="role" value="user">
                     <input type="hidden" name="is_buy" value="0">
-                    <button class="btn btn-primary w-100 mt-3" type="submit">Submit</button>
+                    <button class="btn btn-dark w-100 mt-3" type="submit">Submit</button>
                 </form> 
             </main>
             <small class="d-block text-center mt-3">Already Registered? <a href="/login">Login</a></small>

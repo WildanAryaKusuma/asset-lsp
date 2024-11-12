@@ -3,7 +3,7 @@
 @section('container')
     <h3 class="mb-4">Halaman Data Pembeli</h3>
 
-    <a href="{{ route('user.create') }}" class="btn btn-primary my-3">Tambah Pembeli</a>
+    <a href="{{ route('user.create') }}" class="btn btn-dark my-3">Tambah Pembeli</a>
     <table class="table table-responsive">
         <thead>
             <tr>

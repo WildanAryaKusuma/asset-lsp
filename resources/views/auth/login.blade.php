@@ -12,7 +12,7 @@
                     @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     <input type="password" name="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" style="height: 3.5rem;">
                     @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                    <button class="btn btn-primary w-100 mt-3" type="submit">Submit</button>
+                    <button class="btn btn-dark w-100 mt-3" type="submit">Submit</button>
                 </form> 
             </main>
             <small class="d-block text-center mt-3">Not Registered? <a href="/register">Register Now!</a></small>

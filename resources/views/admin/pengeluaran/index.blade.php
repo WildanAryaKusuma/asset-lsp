@@ -3,7 +3,7 @@
 @section('container')
     <h3 class="mb-4">Halaman Data {{ $title }}</h3>
 
-    <div class="card text-start bg-primary text-white" style="width: 350px">
+    <div class="card text-start bg-dark text-white" style="width: 350px">
         <div class="card-body">
             <h5 class="card-title">Total {{ $title }}</h5>
             <p class="card-text">Rp. {{ number_format($total, 0, ',' , '.') }}</p>

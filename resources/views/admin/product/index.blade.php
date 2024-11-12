@@ -3,7 +3,7 @@
 @section('container')
     <h3 class="mb-4">Halaman Data {{ $title }}</h3>
 
-    <a href="{{ $title == "Produk Masuk" ? route('product-in.create') : route('product-out.create') }}" class="btn btn-primary my-3">Tambah {{ $title }}</a>
+    <a href="{{ $title == "Produk Masuk" ? route('product-in.create') : route('product-out.create') }}" class="btn btn-dark my-3">Tambah {{ $title }}</a>
     <table class="table table-responsive">
         <thead>
             <tr>

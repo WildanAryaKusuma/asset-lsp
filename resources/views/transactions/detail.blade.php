@@ -36,7 +36,7 @@
     </div>
 
 
-    <button onclick="print()" class="btn btn-primary mt-5" id="print-button">Cetak</button>
+    <button onclick="print()" class="btn btn-dark mt-5" id="print-button">Cetak</button>
 
     <script>
         function script() {

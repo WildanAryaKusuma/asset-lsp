@@ -32,7 +32,7 @@
 
             <input type="hidden" name="product_id" value="{{ $product->id }}">
     
-            <button class="btn btn-primary mt-4" type="submit">Submit</button>
+            <button class="btn btn-dark mt-4" type="submit">Submit</button>
         </form>
     </div>
     

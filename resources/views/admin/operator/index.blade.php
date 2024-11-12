@@ -3,7 +3,7 @@
 @section('container')
     <h3 class="mb-4">Halaman Data Operator</h3>
 
-    <a href="{{ route('operator.create') }}" class="btn btn-primary my-3">Tambah Operator</a>
+    <a href="{{ route('operator.create') }}" class="btn btn-dark my-3">Tambah Operator</a>
     <table class="table table-responsive">
         <thead>
             <tr>
