@@ -14,13 +14,13 @@ class AdminUserController extends Controller
     public function index()
     {
         $users = User::where('role', 'user')->latest()->get();
-        return view('admin.user.index', compact('users'));
+        return view('dashboard.user.index', compact('users'));
     }
     
     public function pembeli()
     {
         $users = User::where('role', 'user')->where('is_transaction', 1)->latest()->get();
-        return view('admin.pembeli', compact('users'));
+        return view('dashboard.pembeli', compact('users'));
     }
 
     /**
@@ -28,7 +28,7 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        return view('dashboard.user.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class AdminUserController extends Controller
     public function edit(string $id)
     {   
         $user = User::findOrFail($id);
-        return view('admin.user.edit', [
+        return view('dashboard.user.edit', [
             'user' => $user
         ]);
     }

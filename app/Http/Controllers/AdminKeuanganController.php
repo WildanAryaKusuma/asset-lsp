@@ -21,7 +21,7 @@ class AdminKeuanganController extends Controller
 
         $total = $transactions->sum('total_price'); // Menggunakan koleksi untuk menghitung total
 
-        return view('admin.pemasukan.index', [
+        return view('dashboard.reports.pemasukan', [
             'transactions' => $transactions,
             'title' => 'Pemasukan Hari Ini',
             'total' => $total
@@ -41,7 +41,7 @@ class AdminKeuanganController extends Controller
 
         $total = $transactions->sum('total_price'); // Menggunakan koleksi untuk menghitung total
 
-        return view('admin.pemasukan.index', [
+        return view('dashboard.reports.pemasukan', [
             'transactions' => $transactions,
             'title' => 'Pemasukan Bulan Ini',
             'total' => $total
@@ -59,7 +59,7 @@ class AdminKeuanganController extends Controller
 
         $total = $transactions->sum('total_price'); // Menggunakan koleksi untuk menghitung total
 
-        return view('admin.pemasukan.index', [
+        return view('dashboard.reports.pemasukan', [
             'transactions' => $transactions,
             'title' => 'Pemasukan Keseluruhan',
             'total' => $total
@@ -84,7 +84,7 @@ class AdminKeuanganController extends Controller
             ->whereMonth('created_at', date('m'))
             ->sum('subtotal'); // Hanya menjumlahkan subtotal tanpa perlu menghitung quantity
 
-        return view('admin.pengeluaran.index', [
+        return view('dashboard.reports.pengeluaran', [
             'title' => 'Pengeluaran Bulan Ini',
             'reports' => $reports,
             'total' => $totalValue
@@ -105,7 +105,7 @@ class AdminKeuanganController extends Controller
         $totalValue = Report::where('type', 'masuk') // Menggunakan 'masuk' untuk laporan pengeluaran
             ->sum('subtotal'); // Hanya menjumlahkan subtotal tanpa perlu menghitung quantity
 
-        return view('admin.pengeluaran.index', [
+        return view('dashboard.reports.pengeluaran', [
             'reports' => $reports,
             'title' => 'Pengeluaran Keseluruhan',
             'total' => $totalValue

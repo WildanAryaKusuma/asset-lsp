@@ -1,14 +1,14 @@
-@extends('layouts.admin')
+@extends('layouts.dashboard')
 
 @section('container')
-    <h3 class="mb-5">Halaman Tambah Operator</h3>
+    <h3 class="mb-5">Halaman Tambah Pembeli</h3>
 
-    <form action="{{ route('operator.store') }}" method="post">
+    <form action="{{ route('user.store') }}" method="post">
         @csrf
         @method('POST')
         <div class="row">
             <div class="col-md-12">
-                <label for="name" class="form-label">Nama Operator</label>
+                <label for="name" class="form-label">Nama Pembeli</label>
                 <input type="text" name="name" id="name" class="form-control">
             </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="row mt-3">
             <div class="col-md-12">
                 <label for="role" class="form-label">Role</label>
-                <input type="text" name="role" id="role" class="form-control" value="operator" readonly>
+                <input type="text" name="role" id="role" class="form-control" value="user" readonly>
             </div>
         </div>
 

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.dashboard')
 
 @section('container')
     <h3 class="mb-5">Halaman Produk</h3>

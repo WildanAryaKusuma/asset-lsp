@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.dashboard')
 
 @section('container')
     <h3 class="mb-4">Halaman Data Produk</h3>
 
-    <a href="{{ route('admin.products.create') }}" class="btn btn-dark my-3">Tambah Produk</a>
+    <a href="{{ route('dashboard.products.create') }}" class="btn btn-dark my-3">Tambah Produk</a>
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -25,12 +25,18 @@
                     <td>{{ $product->stock }}</td>
                     <td>
                         <div class="d-flex justify-content-center text-center">
-                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-link text-decoration-none">Edit</a>
-                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-link text-decoration-none text-danger" onclick="return confirm('Apakah kamu yakin?')">Delete</button>
-                            </form>
+                            <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-link text-decoration-none">Edit</a>
+
+                            @if (auth()->user()->role != 'operator')
+                                <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="POST"
+                                    style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-link text-decoration-none text-danger"
+                                        onclick="return confirm('Apakah kamu yakin?')">Delete</button>
+                                </form>
+                            @endif
+
                         </div>
                     </td>
                 </tr>

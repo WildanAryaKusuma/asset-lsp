@@ -94,7 +94,7 @@ class CartController extends Controller
             // Log perubahan stok
             Report::create([
                 'product_id' => $product->id,
-                'type' => 'keluar',  // Pengurangan stok
+                'type' => 'keluar',  
                 'quantity' => $item->quantity,
                 'description' => 'Pengurangan stok akibat checkout',
                 'subtotal' => $product->price * $item->quantity

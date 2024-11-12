@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.dashboard')
 
 @section('container')
     <h3 class="mb-4">Halaman Data Pembeli</h3>
@@ -11,7 +11,9 @@
                 <th>Nama Pembeli</th>
                 <th>Email</th>
                 <th>Akun Dibuat</th>
-                <th class="text-center">Aksi</th>
+                @if (auth()->user()->role != 'operator')
+                    <th class="text-center">Aksi</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -23,12 +25,17 @@
                     <td>{{ $user->created_at->format('d-m-Y') }}</td>
                     <td>
                         <div class="d-flex justify-content-center text-center">
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-link text-decoration-none">Edit</a>
-                            <form action="{{ route('user.destroy', $user->id) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-link text-decoration-none text-danger" onclick="return window.confirm('Apakah kamu yakin?')">Delete</button>
-                            </form>
+                            @if (auth()->user()->role != 'operator')
+                                <a href="{{ route('user.edit', $user->id) }}"
+                                    class="btn btn-link text-decoration-none">Edit</a>
+                                <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-link text-decoration-none text-danger"
+                                        onclick="return window.confirm('Apakah kamu yakin?')">Delete</button>
+                                </form>
+                            @endif
+
                         </div>
 
                     </td>

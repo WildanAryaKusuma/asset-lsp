@@ -14,7 +14,7 @@ class AdminProductController extends Controller
     public function index()
     {
         $products = Product::latest()->get();
-        return view('admin.products.index', [
+        return view('dashboard.products.index', [
             'products' => $products,
         ]);
     }
@@ -24,7 +24,7 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create', ['title' => 'Tambah Produk']);
+        return view('dashboard.products.create', ['title' => 'Tambah Produk']);
     }
 
     /**
@@ -41,7 +41,7 @@ class AdminProductController extends Controller
 
         Product::create($validateData);
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route('dashboard.products.index');
     }
 
     /**
@@ -50,7 +50,7 @@ class AdminProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('admin.products.edit', [
+        return view('dashboard.products.edit', [
             'product' => $product,
             'title' => 'Edit Produk'
         ]);
@@ -92,7 +92,7 @@ class AdminProductController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui!');
+        return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil diperbarui!');
     }
 
 
@@ -104,6 +104,6 @@ class AdminProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus!');
+        return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil dihapus!');
     }
 }

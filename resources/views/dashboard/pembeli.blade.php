@@ -1,4 +1,4 @@
-@extends('layouts.operator')
+@extends('layouts.dashboard')
 
 @section('container')
     <h3 >Halaman Data Pembeli</h3>

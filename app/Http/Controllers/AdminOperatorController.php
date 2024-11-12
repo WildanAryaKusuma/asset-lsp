@@ -14,7 +14,7 @@ class AdminOperatorController extends Controller
     public function index()
     {
         $users = User::where('role', 'operator')->latest()->get();
-        return view('admin.operator.index', compact('users'));
+        return view('dashboard.operator.index', compact('users'));
     }
 
     /**
@@ -22,7 +22,7 @@ class AdminOperatorController extends Controller
      */
     public function create()
     {
-        return view('admin.operator.create');
+        return view('dashboard.operator.create');
     }
 
     /**
@@ -58,7 +58,7 @@ class AdminOperatorController extends Controller
     public function edit(string $id)
     {   
         $user = User::findOrFail($id);
-        return view('admin.operator.edit', [
+        return view('dashboard.operator.edit', [
             'user' => $user
         ]);
     }
@@ -85,9 +85,14 @@ class AdminOperatorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
+        if (auth()->user()->role == 'operator') {
+            return redirect()->route('operator.index')->with('error', 'Operator tidak memiliki izin untuk menghapus data.');
+        }
+
         User::destroy($id);
-               
+        return redirect()->route('operator.index')->with('success', 'Data berhasil dihapus.');
     }
+
 }

@@ -5,12 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Operator Marketplace</title>
+    <title>Admin Marketplace</title>
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
 </head>
 
 <body>
-    @include('partials.navbar.operator')
+
+    @if (auth()->user()->role != 'operator')
+        @include('partials.navbar.admin')
+    @else
+        @include('partials.navbar.operator')
+    @endif
 
     <div class="container mt-4">
         @yield('container')
