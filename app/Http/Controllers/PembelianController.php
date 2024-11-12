@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
-use App\Models\Product;
 
 class PembelianController extends Controller
 {
@@ -12,12 +12,16 @@ class PembelianController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        $transaction = Transaction::where('is_buy', 1)->latest()->get();
+    {
+        $carts = Cart::whereHas('transaction', function ($query) {
+            $query->where('payment_status', 'unpaid');
+        })->latest()->get();
+
         return view('pembelian.index', [
-            'transactions' => $transaction
+            'carts' => $carts
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,9 +52,9 @@ class PembelianController extends Controller
      */
     public function edit(string $id)
     {   
-        $transaction = Transaction::findOrFail($id);
+        $cart = Cart::findOrFail($id);
         return view('pembelian.edit', [
-            'transaction' => $transaction
+            'transaction' => $cart
         ]);
     }
 
@@ -79,7 +83,7 @@ class PembelianController extends Controller
      */
     public function destroy(string $id)
     {
-        Transaction::destroy($id);
+        Cart::destroy($id);
         return back();
     }
 }

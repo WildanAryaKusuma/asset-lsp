@@ -15,21 +15,26 @@
                             <th>Product</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{{ $transaction->product->name }}</td>
-                            <td>{{ $transaction->product->price }}</td>
-                            <td>{{ $transaction->quantity }}</td>
-                        </tr>
+                        @foreach ($transaction->carts as $item)
+                            <tr>
+                                <td>{{ $item->product->name }}</td>
+                                <td>Rp. {{ number_format($item->product->price, 0, ',', '.') }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>Rp. {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
-                <p class="fs-5 fw-bold">Total : <span class="text-success">Rp. {{ number_format($transaction->total_price, 0, ',' , '.') }} </span></p>
+                <p class="fs-5 fw-bold">Total : <span class="text-success">Rp.
+                        {{ number_format($transaction->total_price, 0, ',', '.') }} </span></p>
             </div>
         </div>
     </div>
-    
+
 
     <button onclick="print()" class="btn btn-primary mt-5" id="print-button">Cetak</button>
 
@@ -41,10 +46,11 @@
 
     <style>
         @media print {
-            #print-button, #title-page {
+
+            #print-button,
+            #title-page {
                 display: none;
             }
         }
     </style>
-    
 @endsection

@@ -8,7 +8,7 @@
                 <li class="nav-item me-3"><a href="/products"
                         class="nav-link {{ request()->is('products') ? 'active' : '' }}">Products</a></li>
                 <li class="nav-item me-3"><a href="/pembelian"
-                        class="nav-link {{ request()->is('pembelian') ? 'active' : '' }}">Pembelian</a></li>
+                        class="nav-link {{ request()->is('pembelian') ? 'active' : '' }}">Cart</a></li>
                 <li class="nav-item me-3"><a href="/transactions"
                         class="nav-link {{ request()->is('transactions') ? 'active' : '' }}">Transaksi</a></li>
                 @auth

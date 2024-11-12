@@ -73,6 +73,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::resource('pembelian', PembelianController::class);
         Route::resource('transactions', TransactionController::class);
-        Route::post('pembelian/transaksi/{transaksi}', [TransactionController::class, 'store'])->name('pembelian.transaksi');
+        Route::post('cart/transaction', [ProductController::class, 'checkout'])->name('cart.transaksi');
 
 });

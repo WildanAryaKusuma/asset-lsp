@@ -14,7 +14,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('is_transaction', 1)->latest()->get();
+        $transactions = Transaction::latest()->get();
         return view('transactions.index', [
             'transactions' => $transactions
         ]);
@@ -60,11 +60,9 @@ class TransactionController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {   
-        $transaction = Transaction::findOrFail($id);
-        return view('transactions.detail', [
-            'transaction' => $transaction
-        ]);
+    {
+        $transaction = Transaction::with('carts.product')->findOrFail($id);
+        return view('transactions.detail', compact('transaction'));
     }
 
     /**
