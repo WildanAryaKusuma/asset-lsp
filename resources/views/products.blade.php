@@ -3,6 +3,10 @@
 @section('container')
     <h3 class="mb-4">Halaman Produk Makanan</h3>
 
+    <form action="{{ route('products') }}" method="GET" class="mb-4">
+        <input type="text" name="search" id="search-input" class="form-control" placeholder="Cari produk..." value="{{ request('search') }}">
+    </form>
+
     <div class="row">
         @foreach ($products as $product)
             <div class="col-md-4 mt-4">

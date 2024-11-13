@@ -13,11 +13,11 @@
                 </li>
                 <li class="nav-item me-3"><a href="/dashboard/pembeli" class="nav-link {{ request()->is('dashboard/pembeli') ? 'active' : '' }}">Pembeli</a></li>
                 <li class="nav-item me-3 dropdown">
-                    <a href="#" class="nav-link dropdown-toggle {{ request()->is('dashboard/product-all', 'dashboard/product-in', 'dashboard/product-out') ? 'active' : '' }}" data-bs-toggle="dropdown">Product</a>
+                    <a href="#" class="nav-link dropdown-toggle {{ request()->is('dashboard/products', 'dashboard/products-in', 'dashboard/products-out') ? 'active' : '' }}" data-bs-toggle="dropdown">Product</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/dashboard/products" class="dropdown-item {{ request()->is('dashboard/product-all') ? 'active' : '' }}">Semua Produk</a></li>
-                        <li><a href="/dashboard/products-in" class="dropdown-item {{ request()->is('dashboard/product-in') ? 'active' : '' }}">Produk Masuk</a></li>
-                        <li><a href="/dashboard/products-out" class="dropdown-item {{ request()->is('dashboard/product-out') ? 'active' : '' }}">Produk Keluar</a></li>
+                        <li><a href="/dashboard/products" class="dropdown-item {{ request()->is('dashboard/products') ? 'active' : '' }}">Semua Produk</a></li>
+                        <li><a href="/dashboard/products-in" class="dropdown-item {{ request()->is('dashboard/products-in') ? 'active' : '' }}">Produk Masuk</a></li>
+                        <li><a href="/dashboard/products-out" class="dropdown-item {{ request()->is('dashboard/products-out') ? 'active' : '' }}">Produk Keluar</a></li>
                     </ul>
                 </li>
                 <li class="nav-item me-3 dropdown">

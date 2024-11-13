@@ -14,6 +14,8 @@
         </div>
     @endif
 
+    <a href="{{ route('products') }}" class="btn btn-primary mt-3 mb-4">Tambah Pesanan</a>
+
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -49,7 +51,7 @@
     </table>
 
     @if($carts->isNotEmpty())
-        <div class="d-flex justify-content-start">
+        <div class="d-flex justify-content-end" style="margin-right: 1rem">
             <form action="{{ route('cart.transaksi') }}" method="post">
                 @csrf
                 @method('POST')

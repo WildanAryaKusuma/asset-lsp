@@ -3,7 +3,13 @@
 @section('container')
     <h3 class="mb-4">Halaman Data Produk</h3>
 
+    
     <a href="{{ route('dashboard.products.create') }}" class="btn btn-dark my-3">Tambah Produk</a>
+    
+    <form action="{{ route('dashboard.products.index') }}" method="GET" class="mb-4">
+        <input type="text" name="search" class="form-control my-2" placeholder="Cari produk..." value="{{ request('search') }}">
+    </form>
+
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -28,19 +34,20 @@
                             <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-link text-decoration-none">Edit</a>
 
                             @if (auth()->user()->role != 'operator')
-                                <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="POST"
-                                    style="display: inline;">
+                                <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-link text-decoration-none text-danger"
-                                        onclick="return confirm('Apakah kamu yakin?')">Delete</button>
+                                    <button class="btn btn-link text-decoration-none text-danger" onclick="return confirm('Apakah kamu yakin?')">Delete</button>
                                 </form>
                             @endif
-
                         </div>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    <div class="my-5">
+            {{ $products->links() }}
+        </div>
 @endsection

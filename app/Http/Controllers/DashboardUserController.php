@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardUserController extends Controller
 {
@@ -42,7 +43,8 @@ class DashboardUserController extends Controller
             'password' => 'required',
             'role' => 'required',
         ]);
-        
+
+        $validateData['password'] = Hash::make($request->password);
         // dd($validateData);
         
         User::create($validateData);
@@ -80,7 +82,8 @@ class DashboardUserController extends Controller
             'password' => 'required',
             'role' => 'required',
         ]);
-        
+
+        $validateData['password'] = Hash::make($request->password);
         // dd($validateData);
         
         User::whereId($id)->update($validateData);

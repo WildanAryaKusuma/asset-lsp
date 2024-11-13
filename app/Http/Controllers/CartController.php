@@ -19,13 +19,12 @@ class CartController extends Controller
             $query->where('payment_status', 'unpaid')
                 ->where('user_id', auth()->id());
         })->latest()
-            ->get();
+            ->paginate(10);
 
         return view('carts.index', [
             'carts' => $carts
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -84,16 +83,13 @@ class CartController extends Controller
         foreach ($cartItems as $item) {
             $product = $item->product;
 
-            // Cek stok produk sebelum checkout
             if ($product->stock < $item->quantity) {
                 return redirect('/carts')->with('error', "Stok untuk produk {$product->name} tidak mencukupi.");
             }
 
-            // Kurangi stok produk
             $product->stock -= $item->quantity;
             $product->save();
 
-            // Log perubahan stok
             Report::create([
                 'product_id' => $product->id,
                 'type' => 'keluar',
@@ -102,11 +98,9 @@ class CartController extends Controller
                 'subtotal' => $product->price * $item->quantity
             ]);
 
-            // Tambah total harga transaksi
             $totalPrice += $item->subtotal;
         }
 
-        // Update transaksi menjadi 'paid'
         $transaction->update([
             'total_price' => $totalPrice,
             'payment_status' => 'paid'
@@ -145,7 +139,6 @@ class CartController extends Controller
 
         return redirect('/carts')->with('success', 'Cart updated successfully');
     }
-
 
     /**
      * Remove the specified resource from storage.

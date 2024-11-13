@@ -5,14 +5,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\AdminProductController;
-use App\Http\Controllers\AdminKeuanganController;
-use App\Http\Controllers\AdminOperatorController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\DashboardProductController;
-use App\Http\Controllers\OperatorKeuanganController;
 use App\Http\Controllers\DashboardKeuanganController;
 use App\Http\Controllers\DashboardOperatorController;
 
@@ -44,8 +39,8 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('dashboard/products', DashboardProductController::class);
         });
 
-        Route::get('/dashboard/products-in', [ReportController::class, 'showIncomingProducts'])->name('dashboard.produkmasuk.index');
-        Route::get('/dashboard/products-out', [ReportController::class, 'showOutgoingProducts'])->name('dashboard.produkkeluar.index');
+        Route::get('/dashboard/products-in', [ReportController::class, 'showIncomingProducts'])->name('dashboard.products-in.index');
+        Route::get('/dashboard/products-out', [ReportController::class, 'showOutgoingProducts'])->name('dashboard.products-out.index');
         Route::get('dashboard/pembeli', [DashboardUserController::class, 'pembeli'])->name('dashboard.pembeli');
         Route::get('dashboard/pemasukan-day', [DashboardKeuanganController::class, 'dayPemasukan'])->name('pemasukan.day');
         Route::get('dashboard/pemasukan-month', [DashboardKeuanganController::class, 'monthPemasukan'])->name('pemasukan.month');
@@ -57,8 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard/pengeluaran-all', [DashboardKeuanganController::class, 'allPengeluaran'])->name('pengeluaran.all');
     });
 
-
-    // Rute khusus untuk user
+    // Rute buat user doangan
     Route::middleware('role:user')->group(function () {
         Route::resource('carts', CartController::class);
         Route::post('carts/buy/{id}', [CartController::class, 'create'])->name('cartbuy.create');

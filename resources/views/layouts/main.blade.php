@@ -17,23 +17,36 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var errorAlert = document.getElementById("error-alert");
-            var successAlert = document.getElementById("success-alert");
+    document.addEventListener("DOMContentLoaded", function() {
+        var errorAlert = document.getElementById("error-alert");
+        var successAlert = document.getElementById("success-alert");
 
-            if (errorAlert) {
-                setTimeout(function() {
-                    errorAlert.style.display = "none";
-                }, 2700);
-            }
+        if (errorAlert) {
+            setTimeout(function() {
+                errorAlert.style.display = "none";
+            }, 2700);
+        }
 
-            if (successAlert) {
-                setTimeout(function() {
-                    successAlert.style.display = "none";
-                }, 2700);
-            }
+        if (successAlert) {
+            setTimeout(function() {
+                successAlert.style.display = "none";
+            }, 2700);
+        }
+
+        let searchInput = document.getElementById("search-input");
+        let searchForm = document.getElementById("search-form");
+        let typingTimer;
+        let typingInterval = 500;
+
+        searchInput.addEventListener("keyup", function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function() {
+                searchForm.submit();
+            }, typingInterval);
         });
-    </script>
+    });
+</script>
+
 
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </body>

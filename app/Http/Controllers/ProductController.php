@@ -9,14 +9,20 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::where('stock', '>', 0) 
-        ->latest()
-        ->paginate(6);
+        $query = Product::where('stock', '>', 0);
+
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->latest()->paginate(6);
 
         return view('products', [
             'products' => $products
         ]);
     }
+
 }

@@ -38,4 +38,8 @@
             @endforeach
         </tbody>
     </table>
+
+    <div class="my-5">
+        {{ $transactions->links() }}
+    </div>
 @endsection

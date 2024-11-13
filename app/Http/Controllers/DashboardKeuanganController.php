@@ -17,7 +17,7 @@ class DashboardKeuanganController extends Controller
         $transactions = Transaction::where('payment_status', 'paid')
             ->whereDate('created_at', now()->toDateString())
             ->latest()
-            ->get();
+            ->paginate(10);
 
         $total = $transactions->sum('total_price'); // Menggunakan koleksi untuk menghitung total
 
@@ -37,7 +37,7 @@ class DashboardKeuanganController extends Controller
             ->whereYear('created_at', date('Y'))
             ->whereMonth('created_at', date('m'))
             ->latest()
-            ->get();
+            ->paginate(10);
 
         $total = $transactions->sum('total_price'); // Menggunakan koleksi untuk menghitung total
 
@@ -55,7 +55,7 @@ class DashboardKeuanganController extends Controller
     {
         $transactions = Transaction::where('payment_status', 'paid')
             ->latest()
-            ->get();
+            ->paginate(10);
 
         $total = $transactions->sum('total_price'); // Menggunakan koleksi untuk menghitung total
 

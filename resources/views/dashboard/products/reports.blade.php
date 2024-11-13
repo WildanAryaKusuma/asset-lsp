@@ -3,6 +3,10 @@
 @section('container')
     <h3 class="mb-4">Halaman {{ $title }}</h3>
 
+    <form action="{{ route(Route::currentRouteName()) }}" method="GET" class="mb-4">
+        <input type="text" name="search" class="form-control" placeholder="Cari produk..." value="{{ request('search') }}">
+    </form>
+
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -27,4 +31,8 @@
             @endforeach
         </tbody>
     </table>
+
+    <div class="my-5">
+        {{ $reports->links() }}
+    </div>
 @endsection

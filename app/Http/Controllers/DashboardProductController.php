@@ -11,13 +11,22 @@ class DashboardProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest()->get();
+        $query = Product::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->latest()->paginate(10);
+
         return view('dashboard.products.index', [
             'products' => $products,
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

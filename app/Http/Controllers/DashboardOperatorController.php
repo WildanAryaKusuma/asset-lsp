@@ -10,7 +10,7 @@ class DashboardOperatorController extends Controller
     /**
      * Display a listing of the resource.
      */
-     
+
     public function index()
     {
         $users = User::where('role', 'operator')->latest()->get();
