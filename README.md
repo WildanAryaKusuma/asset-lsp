@@ -66,9 +66,16 @@ php artisan migrate
 ````
 
 ### 5. Link storage for Images
+For images purpose, you must run this : 
+```bash
+php artisan storage:link
+```
+
+### 6. Serve the Application
 Finally, serve your app locally : 
 ```bash
 php artisan serve
 ```
 
+You can now visit the application at `http://localhost:8000` or `http://127.0.0.1:8000` in your browser. 😋😋😋
 
