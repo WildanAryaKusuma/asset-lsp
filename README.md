@@ -37,10 +37,16 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 Follow these steps to set up and run this project locally:
 
 ### 1. Clone the Repository
-Clone the project using Git :
-```bash
-git clone git@github.com:WildanAryaKusuma/asset-lsp.git
-```
+Clone the project using Git. You can choose one of the following options:
+
+- **Using SSH**:
+  ```bash
+  git clone git@github.com:WildanAryaKusuma/asset-lsp.git
+  ```
+- **Using HTTPS**:
+    ```bash
+    git clone https://github.com/WildanAryaKusuma/asset-lsp.git
+    ```
 
 ### 2. Install Dependencies
 Install the required PHP dependencies via Composer:
