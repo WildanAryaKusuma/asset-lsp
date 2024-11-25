@@ -68,8 +68,10 @@ DB_PASSWORD=your_database_password
 Run the migrations to set up your database schema:
 
 ````bash
-php artisan migrate
+php artisan migrate --seed
 ````
+
+seed attribute is for seeding data in products tables
 
 ### 5. Link storage for Images
 For images purpose, you must run this : 
