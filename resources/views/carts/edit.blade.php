@@ -8,7 +8,7 @@
             @csrf
             @method('PUT')
             <div class="my-3">
-                <img src="{{ asset('asset/food/' . str_replace(' ', '', $transaction->product->name) . '.jpg') }}"
+                <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('asset/food/' . str_replace(' ', '', $product->name) . '.jpg') }}"
                     alt="{{ $transaction->product->name }}" height="300px" width="300px">
             </div>
             <div class="row">
