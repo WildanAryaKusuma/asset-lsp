@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\DashboardProductController;
@@ -28,9 +29,7 @@ Route::get('products', [ProductController::class, 'index'])->name('products');
 Route::middleware(['auth'])->group(function () {
 
     Route::middleware('role:admin,operator')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard.home');
-        });
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.home');
 
         Route::resource('dashboard/user', DashboardUserController::class);
         Route::resource('dashboard/operator', DashboardOperatorController::class);

@@ -39,6 +39,6 @@
 
         <input type="hidden" name="oldImage" value="{{ $product->image }}">
 
-        <button type="submit" class="btn btn-dark mt-4">Simpan</button>
+        <button type="submit" class="btn btn-dark mt-3 mb-5">Simpan</button>
     </form>
 @endsection
