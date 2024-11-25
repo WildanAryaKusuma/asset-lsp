@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Report;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardProductController extends Controller
 {
@@ -46,7 +47,14 @@ class DashboardProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        // Proses upload file
+        if ($request->file('image')) {
+            $path = $request->file('image')->store('post-images', 'public'); // Simpan di storage/public/property-images
+            $validateData['image'] = $path; // Simpan path ke database
+        }
 
         $product = Product::create($validateData);
 
@@ -82,16 +90,29 @@ class DashboardProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $newStock = $request->stock;
-        $stockDifference = $newStock - $product->stock;
+        $validateData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->file('image')) {
+            // Hapus gambar lama jika ada
+            if ($request->oldImage) {
+                $image_url = 'public/' . $request->oldImage;
+                Storage::delete($image_url);
+            }
+            // Upload gambar baru
+            $validateData['image'] = $request->file('image')->store('post-images', 'public');
+        }
 
         // Update data produk
-        $product->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $newStock,
-        ]);
+        $newStock = $validateData['stock'];
+        $stockDifference = $newStock - $product->stock;
+
+        $product->update($validateData);
 
         // Log perubahan stok di laporan
         if ($stockDifference > 0) {
@@ -101,15 +122,16 @@ class DashboardProductController extends Controller
                 'type' => 'masuk',
                 'quantity' => $stockDifference,
                 'description' => 'Penambahan stok',
-                'subtotal' => $product->price * $stockDifference 
+                'subtotal' => $product->price * $stockDifference,
             ]);
         } elseif ($stockDifference < 0) {
+            // Pengurangan stok
             Report::create([
                 'product_id' => $product->id,
                 'type' => 'keluar',
                 'quantity' => abs($stockDifference),
                 'description' => 'Pengurangan stok',
-                'subtotal' => $product->price * abs($stockDifference)
+                'subtotal' => $product->price * abs($stockDifference),
             ]);
         }
 
@@ -123,8 +145,14 @@ class DashboardProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+
+        if ($product->image) {
+            Storage::delete('public/' . $product->image);
+        }
+
         $product->delete();
 
         return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil dihapus!');
     }
+
 }
