@@ -12,7 +12,7 @@
                         <li><a href="/dashboard/categories" class="dropdown-item {{ request()->is('dashboard/categories') ? 'active' : '' }}">Kategori Buku</a></li>
                     </ul>
                 </li>
-                <li class="nav-item me-3"><a href="#" class="nav-link {{ request()->is('dashboard/pembeli') ? 'active' : '' }}">Pesanan</a></li>
+                <li class="nav-item me-3"><a href="/dashboard/orders" class="nav-link {{ request()->is('dashboard/orders') ? 'active' : '' }}">Pesanan</a></li>
                 @auth
                     <li class="nav-item me-3 dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Welcome,

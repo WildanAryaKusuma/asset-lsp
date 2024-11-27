@@ -37,6 +37,26 @@
             </div>
         @endif
 
+        <div class="mb-3">
+            <label for="author" class="form-label">Penulis</label>
+            <input type="text" name="author" id="author" class="form-control" value="{{ $product->author }}">
+        </div>
+        <div class="mb-3">
+            <label for="publisher" class="form-label">Penerbit</label>
+            <input type="text" name="publisher" id="publisher" class="form-control" value="{{ $product->publisher }}">
+        </div>
+        <div class="mb-3">
+            <label for="category_id" class="form-label">Kategori</label>
+            <select name="category_id" id="category_id" class="form-select">
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+
         <input type="hidden" name="oldImage" value="{{ $product->image }}">
 
         <button type="submit" class="btn btn-dark mt-3 mb-5">Simpan</button>

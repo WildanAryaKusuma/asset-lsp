@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Transaction;
-use App\Models\User;
-use App\Models\Product;
 
 class TransactionController extends Controller
 {
@@ -14,15 +12,14 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('status', 'paid')
-        ->where('user_id', auth()->user()->id)
-        ->latest()
-        ->get();
+        // Menampilkan transaksi user berdasarkan status
+        $transactions = Transaction::with('carts.product')
+            ->where('user_id', auth()->user()->id)
+            ->whereIn('status', ['paid', 'delivered', 'done'])
+            ->latest()
+            ->get();
 
-        return view('transactions.index', [
-            'transactions' => $transactions
-        ]);
-
+        return view('transactions.index', compact('transactions'));
     }
 
     /**
@@ -30,7 +27,29 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        $transaction = Transaction::with('carts.product')->findOrFail($id);
+        // Menampilkan detail transaksi
+        $transaction = Transaction::with('carts.product')
+            ->where('user_id', auth()->user()->id)
+            ->findOrFail($id);
+
         return view('transactions.detail', compact('transaction'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        // Validasi hanya bisa mengubah status delivered ke done
+        $transaction = Transaction::where('id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->where('status', 'delivered')
+            ->firstOrFail();
+
+        $transaction->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil diperbarui!');
     }
 }

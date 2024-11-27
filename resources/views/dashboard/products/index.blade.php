@@ -16,6 +16,9 @@
             <tr>
                 <th>#</th>
                 <th>Nama Produk</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Category</th>
                 <th>Gambar Produk</th>
                 <th>Deskripsi</th>
                 <th>Harga</th>
@@ -28,6 +31,9 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $product->name }}</td>
+                    <td>{{ $product->author }}</td>
+                    <td>{{ $product->publisher }}</td>
+                    <td>{{ $product->category->name }}</td>
                     <td>
                         @if ($product->image)
                             <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
@@ -60,6 +66,7 @@
             @endforeach
         </tbody>
     </table>
+
 
     <div class="my-5">
         {{ $products->links() }}

@@ -4,7 +4,7 @@
     <h3 class="mb-4">Halaman Produk Makanan</h3>
 
     <form action="{{ route('products') }}" method="GET" class="mb-4">
-        <input type="text" name="search" id="search-input" class="form-control" placeholder="Cari produk..."
+        <input type="text" name="search" id="search-input" class="form-control" placeholder="Cari produk atau kategori..."
             value="{{ request('search') }}">
     </form>
 
@@ -18,7 +18,7 @@
 
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
-                        <p>In <small><a href="#" class="text-decoration-none">Kategori Buku</a></small></p>
+                        <p>In <small><a href="#" class="text-decoration-none">{{ $product->category->name }}</a></small></p>
                         <h6 class="card-text">Rp. {{ number_format($product->price, 0, ',', '.') }}</h6>
                         <small class="card-text">Stok : {{ $product->stock }}</small>
                         <p class="card-text">{{ $product->description }}</p>

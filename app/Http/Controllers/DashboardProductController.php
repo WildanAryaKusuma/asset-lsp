@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,10 +19,11 @@ class DashboardProductController extends Controller
 
         if ($request->has('search') && $request->search != '') {
             $query->where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('description', 'like', '%' . $request->search . '%');
+                ->orWhere('author', 'like', '%' . $request->search . '%')
+                ->orWhere('publisher', 'like', '%' . $request->search . '%');
         }
 
-        $products = $query->latest()->paginate(10);
+        $products = $query->with('category')->latest()->paginate(10);
 
         return view('dashboard.products.index', [
             'products' => $products,
@@ -33,7 +35,9 @@ class DashboardProductController extends Controller
      */
     public function create()
     {
-        return view('dashboard.products.create');
+        return view('dashboard.products.create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -43,10 +47,13 @@ class DashboardProductController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required',
+            'author' => 'required',
+            'publisher' => 'required',
+            'category_id' => 'required|exists:categories,id',
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Proses upload file
@@ -72,8 +79,9 @@ class DashboardProductController extends Controller
         $product = Product::findOrFail($id);
         return view('dashboard.products.edit', [
             'product' => $product,
-            'title' => 'Edit Produk'
+            'categories' => Category::all()
         ]);
+
     }
 
     /**
@@ -83,6 +91,9 @@ class DashboardProductController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required',
+            'author' => 'required',
+            'publisher' => 'required',
+            'category_id' => 'required|exists:categories,id',
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
