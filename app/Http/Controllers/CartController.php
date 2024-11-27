@@ -82,6 +82,7 @@ class CartController extends Controller
 
         foreach ($cartItems as $item) {
             $product = $item->product;
+            // dd($product);
 
             if ($product->stock < $item->quantity) {
                 return redirect('/carts')->with('error', "Stok untuk produk {$product->name} tidak mencukupi.");
@@ -146,6 +147,6 @@ class CartController extends Controller
     public function destroy(string $id)
     {
         Cart::destroy($id);
-        return back();
+        return back()->with('success', 'Your cart data has been deleted');
     }
 }

@@ -55,7 +55,7 @@
             <form action="{{ route('cart.transaksi') }}" method="post">
                 @csrf
                 @method('POST')
-                <button type="submit" class="btn btn-dark my-3" onclick="window.confirm('Apakah kamu ingin checkout?')">Checkout</button>
+                <button type="submit" class="btn btn-dark my-3" onclick="return window.confirm('Apakah kamu ingin checkout?')">Checkout</button>
             </form>
         </div>
     @endif
