@@ -13,8 +13,8 @@
             <div class="col-md-4 mt-4">
                 <div class="card">
                     <img style="max-height: 400px"
-                        src="{{ $product->image ? asset('storage/' . $product->image) : asset('asset/food/' . str_replace(' ', '', $product->name) . '.jpg') }}"
-                        alt="{{ $product->name }}" class="card-img-top" height="300px">
+                        src="{{ $product->image ? asset('storage/' . $product->image) : asset('asset/books/' . str_replace(' ', '', $product->name) . '.jpg') }}"
+                        alt="{{ $product->name }}" class="card-img-top" height="400px">
 
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
