@@ -16,7 +16,7 @@ class CartController extends Controller
     public function index()
     {
         $carts = Cart::whereHas('transaction', function ($query) {
-            $query->where('payment_status', 'unpaid')
+            $query->where('status', 'unpaid')
                 ->where('user_id', auth()->id());
         })->latest()
             ->paginate(10);
@@ -47,11 +47,11 @@ class CartController extends Controller
         $transaction = Transaction::firstOrCreate(
             [
                 'user_id' => auth()->user()->id,
-                'payment_status' => 'unpaid'
+                'status' => 'unpaid'
             ],
             [
                 'total_price' => 0,
-                'payment_status' => 'unpaid',
+                'status' => 'unpaid',
             ]
         );
 
@@ -70,7 +70,7 @@ class CartController extends Controller
     public function checkout()
     {
         $transaction = Transaction::where('user_id', auth()->user()->id)
-            ->where('payment_status', 'unpaid')
+            ->where('status', 'unpaid')
             ->first();
 
         if (!$transaction) {
@@ -96,7 +96,7 @@ class CartController extends Controller
 
         $transaction->update([
             'total_price' => $totalPrice,
-            'payment_status' => 'paid'
+            'status' => 'paid'
         ]);
         
         auth()->user()->update(['is_transaction' => 1]);

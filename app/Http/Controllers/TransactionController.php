@@ -14,7 +14,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('payment_status', 'paid')
+        $transactions = Transaction::where('status', 'paid')
         ->where('user_id', auth()->user()->id)
         ->latest()
         ->get();

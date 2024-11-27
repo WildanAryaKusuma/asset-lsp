@@ -15,7 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
             $table->float('total_price');
-            $table->string('payment_status');
+            $table->string('status');
+            /*
+            unpaid - secondary
+            paid - danger
+            delivered - warning
+            done - success
+            */
             $table->timestamps();
         });
     }

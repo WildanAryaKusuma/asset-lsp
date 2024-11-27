@@ -18,6 +18,7 @@
 
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
+                        <p>In <small><a href="#" class="text-decoration-none">Kategori Buku</a></small></p>
                         <h6 class="card-text">Rp. {{ number_format($product->price, 0, ',', '.') }}</h6>
                         <small class="card-text">Stok : {{ $product->stock }}</small>
                         <p class="card-text">{{ $product->description }}</p>
