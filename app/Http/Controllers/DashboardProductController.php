@@ -28,13 +28,12 @@ class DashboardProductController extends Controller
         ]);
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('dashboard.products.create', ['title' => 'Tambah Produk']);
+        return view('dashboard.products.create');
     }
 
     /**
@@ -60,14 +59,6 @@ class DashboardProductController extends Controller
 
         // Tambahkan report saat produk baru dibuat
         $stockDifference = $validateData['stock']; // Jumlah stok awal
-
-        Report::create([
-            'product_id' => $product->id,
-            'type' => 'masuk',
-            'quantity' => $stockDifference,
-            'description' => 'Penambahan stok product baru',
-            'subtotal' => $product->price * $stockDifference
-        ]);
 
         return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
@@ -113,27 +104,6 @@ class DashboardProductController extends Controller
         $stockDifference = $newStock - $product->stock;
 
         $product->update($validateData);
-
-        // Log perubahan stok di laporan
-        if ($stockDifference > 0) {
-            // Penambahan stok
-            Report::create([
-                'product_id' => $product->id,
-                'type' => 'masuk',
-                'quantity' => $stockDifference,
-                'description' => 'Penambahan stok',
-                'subtotal' => $product->price * $stockDifference,
-            ]);
-        } elseif ($stockDifference < 0) {
-            // Pengurangan stok
-            Report::create([
-                'product_id' => $product->id,
-                'type' => 'keluar',
-                'quantity' => abs($stockDifference),
-                'description' => 'Pengurangan stok',
-                'subtotal' => $product->price * abs($stockDifference),
-            ]);
-        }
 
         return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil diperbarui!');
     }

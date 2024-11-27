@@ -25,12 +25,6 @@ class DatabaseSeeder extends Seeder
         ]);
         
         User::factory()->create([
-            'name' => 'Operator',
-            'email' => 'operator@gmail.com',
-            'role' => 'operator',
-        ]);
-        
-        User::factory()->create([
             'name' => 'User',
             'email' => 'user@gmail.com',
             'role' => 'user',
@@ -89,78 +83,6 @@ class DatabaseSeeder extends Seeder
             'description' => 'Makanan yang nyaman berupa nasi dengan ikan lele goreng bersama dengan sambal yang nikmat dan juga khas',
             'stock' => 20,
             'price' => 30000
-        ]);
-
-        Report::create([
-            'product_id' => 1, // Burger
-            'type' => 'masuk',
-            'quantity' => 20,
-            'description' => 'Penambahan stok',
-            'subtotal' => 40000 * 20
-        ]);
-
-        Report::create([
-            'product_id' => 2, // Nasi Goreng
-            'type' => 'masuk',
-            'quantity' => 50,
-            'description' => 'Penambahan stok',
-            'subtotal' => 35000 * 50
-        ]);
-
-        Report::create([
-            'product_id' => 3, // Sate
-            'type' => 'masuk',
-            'quantity' => 15,
-            'description' => 'Penambahan stok',
-            'subtotal' => 55000 * 15
-        ]);
-
-        Report::create([
-            'product_id' => 4, // Bakso
-            'type' => 'masuk',
-            'quantity' => 20,
-            'description' => 'Penambahan stok',
-            'subtotal' => 28000 * 20
-        ]);
-
-        Report::create([
-            'product_id' => 5, // Breakfast
-            'type' => 'masuk',
-            'quantity' => 10,
-            'description' => 'Penambahan stok',
-            'subtotal' => 90000 * 10
-        ]);
-
-        Report::create([
-            'product_id' => 6, // Lasagna
-            'type' => 'masuk',
-            'quantity' => 15,
-            'description' => 'Penambahan stok',
-            'subtotal' => 120000 * 15
-        ]);
-
-        Report::create([
-            'product_id' => 7, // Nasi Ayam
-            'type' => 'masuk',
-            'quantity' => 20,
-            'description' => 'Penambahan stok',
-            'subtotal' => 28000 * 20
-        ]);
-
-        Report::create([
-            'product_id' => 8, // Piscok
-            'type' => 'masuk',
-            'quantity' => 10,
-            'description' => 'Penambahan stok',
-            'subtotal' => 10000 * 10
-        ]);
-
-        Report::create([
-            'product_id' => 9, // Pecel Lele
-            'type' => 'masuk',
-            'quantity' => 20,
-            'description' => 'Penambahan stok',
-            'subtotal' => 30000 * 20
         ]);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('container')
-    <h3 class="mb-5">Halaman Produk</h3>
+    <h3 class="mb-5">Halaman Tambah Produk</h3>
 
     <form action="{{ route('dashboard.products.store') }}" method="post" enctype="multipart/form-data">
         @csrf
@@ -25,8 +25,6 @@
             <label for="image" class="form-label">Product Image</label>
             <input type="file" name="image" id="image" class="form-control">
         </div>
-
-        
 
         <button type="submit" class="btn btn-dark mt-4">Tambah Produk</button>
     </form>

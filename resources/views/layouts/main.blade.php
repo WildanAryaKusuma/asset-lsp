@@ -32,18 +32,6 @@
                 successAlert.style.display = "none";
             }, 2700);
         }
-
-        let searchInput = document.getElementById("search-input");
-        let searchForm = document.getElementById("search-form");
-        let typingTimer;
-        let typingInterval = 500;
-
-        searchInput.addEventListener("keyup", function() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(function() {
-                searchForm.submit();
-            }, typingInterval);
-        });
     });
 </script>
 

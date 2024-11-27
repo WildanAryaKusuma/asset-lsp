@@ -5,6 +5,8 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item me-3"><a href="/"
                         class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a></li>
+                <li class="nav-item me-3"><a href="/about"
+                        class="nav-link {{ request()->is('about') ? 'active' : '' }}">About Us</a></li>
                 <li class="nav-item me-3"><a href="/products"
                         class="nav-link {{ request()->is('products') ? 'active' : '' }}">Products</a></li>
                 <li class="nav-item me-3"><a href="/carts"

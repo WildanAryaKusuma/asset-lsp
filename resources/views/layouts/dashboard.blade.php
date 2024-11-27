@@ -11,11 +11,7 @@
 
 <body>
 
-    @if (auth()->user()->role != 'operator')
-        @include('partials.navbar.admin')
-    @else
-        @include('partials.navbar.operator')
-    @endif
+    @include('partials.navbar.admin')
 
     <div class="container mt-4">
         @yield('container')

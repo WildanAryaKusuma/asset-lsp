@@ -17,12 +17,6 @@ class DashboardUserController extends Controller
         $users = User::where('role', 'user')->latest()->get();
         return view('dashboard.user.index', compact('users'));
     }
-    
-    public function pembeli()
-    {
-        $users = User::where('role', 'user')->where('is_transaction', 1)->latest()->get();
-        return view('dashboard.pembeli', compact('users'));
-    }
 
     /**
      * Show the form for creating a new resource.

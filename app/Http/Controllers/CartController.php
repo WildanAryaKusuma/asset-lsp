@@ -91,14 +91,6 @@ class CartController extends Controller
             $product->stock -= $item->quantity;
             $product->save();
 
-            Report::create([
-                'product_id' => $product->id,
-                'type' => 'keluar',
-                'quantity' => $item->quantity,
-                'description' => 'Pengurangan stok akibat checkout',
-                'subtotal' => $product->price * $item->quantity
-            ]);
-
             $totalPrice += $item->subtotal;
         }
 

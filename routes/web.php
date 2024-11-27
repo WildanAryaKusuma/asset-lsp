@@ -24,31 +24,20 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('about', function () {
+    return view('about');
+});
+
 Route::get('products', [ProductController::class, 'index'])->name('products');
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::middleware('role:admin,operator')->group(function () {
+    Route::middleware('role:admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.home');
-
         Route::resource('dashboard/user', DashboardUserController::class);
-        Route::resource('dashboard/operator', DashboardOperatorController::class);
-
         Route::name('dashboard.')->group(function () {
             Route::resource('dashboard/products', DashboardProductController::class);
         });
-
-        Route::get('/dashboard/products-in', [ReportController::class, 'showIncomingProducts'])->name('dashboard.products-in.index');
-        Route::get('/dashboard/products-out', [ReportController::class, 'showOutgoingProducts'])->name('dashboard.products-out.index');
-        Route::get('dashboard/pembeli', [DashboardUserController::class, 'pembeli'])->name('dashboard.pembeli');
-        Route::get('dashboard/pemasukan-day', [DashboardKeuanganController::class, 'dayPemasukan'])->name('pemasukan.day');
-        Route::get('dashboard/pemasukan-month', [DashboardKeuanganController::class, 'monthPemasukan'])->name('pemasukan.month');
-        Route::get('dashboard/pemasukan-all', [DashboardKeuanganController::class, 'allPemasukan'])->name('pemasukan.all');
-    });
-
-    Route::middleware('role:admin')->group(function () {
-        Route::get('dashboard/pengeluaran-month', [DashboardKeuanganController::class, 'monthPengeluaran'])->name('pengeluaran.month');
-        Route::get('dashboard/pengeluaran-all', [DashboardKeuanganController::class, 'allPengeluaran'])->name('pengeluaran.all');
     });
 
     // Rute buat user doangan

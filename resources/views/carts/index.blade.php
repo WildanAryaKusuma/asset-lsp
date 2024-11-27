@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <a href="{{ route('products') }}" class="btn btn-primary mt-3 mb-4">Tambah Pesanan</a>
+    <a href="{{ route('products') }}" class="btn btn-dark mt-3 mb-4">Tambah Pesanan</a>
 
     <table class="table table-responsive">
         <thead>
